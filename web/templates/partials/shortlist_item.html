@@ -1,0 +1,35 @@
+{{if .IsShortlisted}}
+<div id="shortlist-item-{{.Project.ID}}" class="shortlist-card">
+    <div class="shortlist-card-img" {{if .Project.ImageURL}}style="background-image: url('{{.Project.ImageURL}}');"{{end}}>
+        <span class="badge badge-match">{{.Project.MatchScore}}% Match</span>
+    </div>
+    <div class="shortlist-card-content">
+        <div class="shortlist-card-header">
+            <h3 class="shortlist-card-title">{{.Project.Title}}</h3>
+            <span class="badge badge-outline">{{.Project.Category}}</span>
+        </div>
+        <p class="shortlist-card-role">{{.Project.Role}}</p>
+        <p class="shortlist-card-tagline">{{.Project.Tagline}}</p>
+        <div class="shortlist-card-actions">
+            <a href="/projects/{{.Project.ID}}/player" class="btn btn-sm btn-white">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span>Play</span>
+            </a>
+            <button class="btn btn-sm btn-outline-danger" 
+                    hx-post="/shortlist/{{.Project.ID}}" 
+                    hx-target="#shortlist-item-{{.Project.ID}}" 
+                    hx-swap="outerHTML"
+                    title="Remove from shortlist" 
+                    aria-label="Remove {{.Project.Title}} from shortlist">
+                &times; Remove
+            </button>
+        </div>
+    </div>
+    <span id="shortlist-counter" hx-swap-oob="true" class="counter-badge">{{.Count}}</span>
+</div>
+{{else}}
+<div id="shortlist-item-{{.Project.ID}}" class="shortlist-removed" style="display:none;"></div>
+<span id="shortlist-counter" hx-swap-oob="true" class="counter-badge">{{.Count}}</span>
+{{end}}

@@ -12,16 +12,20 @@ type Renderer interface {
 }
 
 type Handler struct {
-	projects *repository.ProjectRepo
-	skills   *repository.SkillRepo
-	renderer Renderer
+	projects   *repository.ProjectRepo
+	skills     *repository.SkillRepo
+	shortlists *repository.ShortlistRepo
+	inquiries  *repository.InquiryRepo
+	renderer   Renderer
 }
 
-func New(projects *repository.ProjectRepo, skills *repository.SkillRepo, renderer Renderer) *Handler {
+func New(projects *repository.ProjectRepo, skills *repository.SkillRepo, shortlists *repository.ShortlistRepo, inquiries *repository.InquiryRepo, renderer Renderer) *Handler {
 	return &Handler{
-		projects: projects,
-		skills:   skills,
-		renderer: renderer,
+		projects:   projects,
+		skills:     skills,
+		shortlists: shortlists,
+		inquiries:  inquiries,
+		renderer:   renderer,
 	}
 }
 
@@ -62,6 +66,13 @@ func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	shortlistCount := 0
+	if cookie, err := r.Cookie("iqbal_session"); err == nil && cookie != nil && cookie.Value != "" {
+		if items, err := h.shortlists.ListShortlist(cookie.Value); err == nil {
+			shortlistCount = len(items)
+		}
+	}
+
 	data := struct {
 		Title          string
 		HideNav        bool
@@ -81,7 +92,7 @@ func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
 		PersonaName:    persona.Name,
 		PersonaColor:   persona.Color,
 		PersonaInitial: persona.Initial,
-		ShortlistCount: 0,
+		ShortlistCount: shortlistCount,
 		Hero:           hero,
 		Projects:       projects,
 		TopSkills:      skills,

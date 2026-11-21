@@ -59,7 +59,7 @@ func NewServer(db *sql.DB) (*Server, error) {
 		Inquiries:  iRepo,
 	}
 
-	srv.handlers = handlers.New(pRepo, sRepo, srv)
+	srv.handlers = handlers.New(pRepo, sRepo, shRepo, iRepo, srv)
 
 	if err := srv.registerRoutes(); err != nil {
 		return nil, fmt.Errorf("failed to register routes: %w", err)
@@ -89,8 +89,28 @@ func (s *Server) registerRoutes() error {
 	s.router.HandleFunc("GET /projects/{id}/modal", s.HandleProjectModal)
 	s.router.HandleFunc("GET /search", s.HandleSearch)
 	s.router.HandleFunc("GET /api/search", s.HandleSearchAPI)
+	s.router.HandleFunc("GET /projects/{id}/player", s.HandlePlayer)
+	s.router.HandleFunc("GET /shortlist", s.HandleShortlist)
+	s.router.HandleFunc("POST /shortlist/{id}", s.HandleShortlistToggle)
+	s.router.HandleFunc("POST /inquiries", s.HandleInquiries)
 
 	return nil
+}
+
+func (s *Server) HandlePlayer(w http.ResponseWriter, r *http.Request) {
+	s.handlers.Player(w, r)
+}
+
+func (s *Server) HandleShortlist(w http.ResponseWriter, r *http.Request) {
+	s.handlers.Shortlist(w, r)
+}
+
+func (s *Server) HandleShortlistToggle(w http.ResponseWriter, r *http.Request) {
+	s.handlers.ShortlistToggle(w, r)
+}
+
+func (s *Server) HandleInquiries(w http.ResponseWriter, r *http.Request) {
+	s.handlers.Inquiries(w, r)
 }
 
 func (s *Server) HandleProjectModal(w http.ResponseWriter, r *http.Request) {

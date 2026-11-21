@@ -1,0 +1,28 @@
+{{if .Success}}
+<div class="inquiry-alert alert-success" role="status">
+    <div class="alert-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+    </div>
+    <div class="alert-content">
+        <h4 class="alert-title" style="color: #46D369;">Inquiry Received!</h4>
+        <p class="alert-desc">Thank you, <strong>{{.Name}}</strong>. Iqbal has received your technical inquiry and will get back to you within 24 hours.</p>
+    </div>
+</div>
+{{else}}
+<div class="inquiry-alert alert-error" role="alert">
+    <div class="alert-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#E50914" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+    </div>
+    <div class="alert-content">
+        <h4 class="alert-title" style="color: #E50914;">Validation Error</h4>
+        <p class="alert-desc">{{.Error}}</p>
+    </div>
+</div>
+{{end}}

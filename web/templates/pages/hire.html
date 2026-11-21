@@ -1,0 +1,239 @@
+{{define "content"}}
+<div class="hire-page-container">
+    <!-- Section 1: My Shortlist -->
+    <section class="shortlist-section" id="shortlist">
+        <div class="section-header">
+            <h1 class="page-main-title">My Shortlist</h1>
+            <p class="section-subtitle">Bookmarked projects &amp; architecture walkthroughs for technical evaluation</p>
+        </div>
+
+        <div id="shortlist-grid" class="shortlist-grid">
+            {{if .Shortlist}}
+                {{range .Shortlist}}
+                <div id="shortlist-item-{{.ID}}" class="shortlist-card">
+                    <div class="shortlist-card-img" {{if .ImageURL}}style="background-image: url('{{.ImageURL}}');"{{end}}>
+                        <span class="badge badge-match">{{.MatchScore}}% Match</span>
+                    </div>
+                    <div class="shortlist-card-content">
+                        <div class="shortlist-card-header">
+                            <h3 class="shortlist-card-title">{{.Title}}</h3>
+                            <span class="badge badge-outline">{{.Category}}</span>
+                        </div>
+                        <p class="shortlist-card-role">{{.Role}}</p>
+                        <p class="shortlist-card-tagline">{{.Tagline}}</p>
+                        <div class="shortlist-card-actions">
+                            <a href="/projects/{{.ID}}/player" class="btn btn-sm btn-white">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                                <span>Play</span>
+                            </a>
+                            <button class="btn btn-sm btn-outline-danger" 
+                                    hx-post="/shortlist/{{.ID}}" 
+                                    hx-target="#shortlist-item-{{.ID}}" 
+                                    hx-swap="outerHTML"
+                                    title="Remove from shortlist" 
+                                    aria-label="Remove {{.Title}} from shortlist">
+                                &times; Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            {{else}}
+                <div class="shortlist-empty">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="empty-icon">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                    <h3 class="empty-title">Your Shortlist is Empty</h3>
+                    <p class="empty-desc">Explore projects on the showcase and click "+ Shortlist" or the bookmark icon to collect projects for review.</p>
+                    <a href="/#projects" class="btn btn-primary" style="margin-top: 1rem;">Browse Projects</a>
+                </div>
+            {{end}}
+        </div>
+    </section>
+
+    <!-- Section 2: Choose Your Plan -->
+    <section class="plans-section" id="plans">
+        <div class="section-header text-center">
+            <span class="badge badge-outline" style="letter-spacing: 1px;">ENGAGEMENT TIERS</span>
+            <h2 class="section-title">Choose Your Plan</h2>
+            <p class="section-subtitle">Flexible engagement models tailored for fast-scaling startups, venture builders, and enterprise infrastructure</p>
+        </div>
+
+        <div class="plans-grid">
+            <!-- Tier 1: Full-Time Staff / Lead (POPULAR) -->
+            <div class="plan-card plan-card-featured">
+                <div class="plan-badge-wrapper">
+                    <span class="plan-badge badge-popular">POPULAR</span>
+                </div>
+                <div class="plan-header">
+                    <h3 class="plan-title">Full-Time Staff / Lead</h3>
+                    <div class="plan-role">Staff / Principal Backend &amp; Systems Engineer</div>
+                    <div class="plan-commitment">Full-Time &bull; Remote or Hybrid</div>
+                </div>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Core system architecture &amp; distributed services in Go</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Autonomous multi-agent orchestration &amp; LLM workflows</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Sub-millisecond p99 latency optimization &amp; eBPF observability</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Technical leadership, RFC authoring, and team mentoring</span>
+                    </li>
+                </ul>
+                <div class="plan-action">
+                    <button type="button" class="btn btn-primary plan-select-btn" onclick="selectPlan('staff')">
+                        Select Full-Time
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tier 2: Advisory / Architecture Sprint -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-title">Advisory / Architecture Sprint</h3>
+                    <div class="plan-role">Technical Consultant</div>
+                    <div class="plan-commitment">2 &ndash; 4 Weeks Intensive &bull; Fixed Scope</div>
+                </div>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>System bottleneck audit &amp; high-load profiling</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Architecture blueprints &amp; migration roadmaps</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Concurrency, consensus (Raft), &amp; data modeling review</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Executive report with prioritized recommendations</span>
+                    </li>
+                </ul>
+                <div class="plan-action">
+                    <button type="button" class="btn btn-secondary plan-select-btn" onclick="selectPlan('sprint')">
+                        Select Sprint
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tier 3: Contract / Fractional -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3 class="plan-title">Contract / Fractional</h3>
+                    <div class="plan-role">Fractional Lead</div>
+                    <div class="plan-commitment">Quarterly / Monthly Retainer &bull; 10-20 hrs/wk</div>
+                </div>
+                <div class="plan-divider"></div>
+                <ul class="plan-features">
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Fractional CTO / Staff-level technical guidance</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>MVP to Production scaling oversight</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Key architectural decisions &amp; vendor assessments</span>
+                    </li>
+                    <li>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#46D369" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                        <span>Hiring candidate interviews &amp; senior bar evaluation</span>
+                    </li>
+                </ul>
+                <div class="plan-action">
+                    <button type="button" class="btn btn-secondary plan-select-btn" onclick="selectPlan('fractional')">
+                        Select Fractional
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Hire / Contact Form -->
+    <section class="hire-form-section" id="hire">
+        <div class="form-wrapper">
+            <div class="section-header text-center">
+                <h2 class="section-title">Hire / Contact Iqbal</h2>
+                <p class="section-subtitle">Ready to build or scale high-throughput infrastructure? Send your message and get a direct response.</p>
+            </div>
+
+            <form id="hire-form" 
+                  hx-post="/inquiries" 
+                  hx-target="#inquiry-feedback" 
+                  hx-swap="innerHTML"
+                  class="hire-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="inquiry-name" class="form-label">Your Name or Organization *</label>
+                        <input type="text" id="inquiry-name" name="name" class="form-input" placeholder="e.g. Sarah Connor / Netflix" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="inquiry-email" class="form-label">Work Email *</label>
+                        <input type="email" id="inquiry-email" name="email" class="form-input" placeholder="s.connor@netflix.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="engagement-type" class="form-label">Engagement Model *</label>
+                    <select id="engagement-type" name="engagement_type" class="form-select">
+                        <option value="staff">Full-Time Staff / Lead (Principal / Staff Backend Engineer)</option>
+                        <option value="sprint">Advisory / Architecture Sprint (2-4 Weeks Intensive)</option>
+                        <option value="fractional">Contract / Fractional (Quarterly / Monthly)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="inquiry-message" class="form-label">Project Scope &amp; Technical Challenges *</label>
+                    <textarea id="inquiry-message" name="message" class="form-textarea" rows="5" placeholder="Describe your architecture requirements, concurrency bottlenecks, timelines, or hiring goals..." required></textarea>
+                </div>
+
+                <div class="form-submit-row">
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <span>Send Technical Inquiry</span>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+
+                <div id="inquiry-feedback" class="inquiry-feedback-area"></div>
+            </form>
+        </div>
+    </section>
+</div>
+
+<script>
+function selectPlan(tier) {
+    const select = document.getElementById('engagement-type');
+    if (select) {
+        select.value = tier;
+    }
+    const formSection = document.getElementById('hire');
+    if (formSection) {
+        formSection.scrollIntoView({ behavior: 'smooth' });
+    }
+    const nameInput = document.getElementById('inquiry-name');
+    if (nameInput) {
+        nameInput.focus();
+    }
+}
+</script>
+{{end}}
