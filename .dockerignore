@@ -1,0 +1,8 @@
+.git
+.superpowers
+bin
+*.db
+*.db-wal
+*.db-shm
+test.jpg
+upload_job.py
