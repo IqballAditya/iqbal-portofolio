@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"iqbal-portfolio/internal/handlers"
 	"iqbal-portfolio/internal/repository"
 	"iqbal-portfolio/web"
 )
@@ -17,10 +18,12 @@ type Server struct {
 	router     *http.ServeMux
 	db         *sql.DB
 	tmpl       *template.Template
+	pages      map[string]*template.Template
 	projects   *repository.ProjectRepo
 	skills     *repository.SkillRepo
 	shortlists *repository.ShortlistRepo
 	inquiries  *repository.InquiryRepo
+	handlers   *handlers.Handler
 
 	Projects   *repository.ProjectRepo
 	Skills     *repository.SkillRepo
@@ -29,7 +32,7 @@ type Server struct {
 }
 
 func NewServer(db *sql.DB) (*Server, error) {
-	tmpl, err := parseTemplates()
+	tmpl, pages, err := parseTemplates()
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse templates: %w", err)
 	}
@@ -45,6 +48,7 @@ func NewServer(db *sql.DB) (*Server, error) {
 		router:     mux,
 		db:         db,
 		tmpl:       tmpl,
+		pages:      pages,
 		projects:   pRepo,
 		skills:     sRepo,
 		shortlists: shRepo,
@@ -54,6 +58,8 @@ func NewServer(db *sql.DB) (*Server, error) {
 		Shortlists: shRepo,
 		Inquiries:  iRepo,
 	}
+
+	srv.handlers = handlers.New(pRepo, sRepo, srv)
 
 	if err := srv.registerRoutes(); err != nil {
 		return nil, fmt.Errorf("failed to register routes: %w", err)
@@ -77,7 +83,23 @@ func (s *Server) registerRoutes() error {
 		_, _ = w.Write([]byte("OK"))
 	})
 
+	s.router.HandleFunc("GET /{$}", s.HandleHome)
+	s.router.HandleFunc("GET /gateway", s.HandleGateway)
+	s.router.HandleFunc("POST /gateway/select", s.HandleGatewaySelect)
+
 	return nil
+}
+
+func (s *Server) HandleGateway(w http.ResponseWriter, r *http.Request) {
+	s.handlers.Gateway(w, r)
+}
+
+func (s *Server) HandleGatewaySelect(w http.ResponseWriter, r *http.Request) {
+	s.handlers.GatewaySelect(w, r)
+}
+
+func (s *Server) HandleHome(w http.ResponseWriter, r *http.Request) {
+	s.handlers.Home(w, r)
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -98,10 +120,16 @@ func (s *Server) Templates() *template.Template {
 
 func (s *Server) Render(w http.ResponseWriter, name string, data any) error {
 	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	if pageTmpl, ok := s.pages[name]; ok {
+		if pageTmpl.Lookup("base.html") != nil {
+			return pageTmpl.ExecuteTemplate(w, "base.html", data)
+		}
+		return pageTmpl.ExecuteTemplate(w, name, data)
+	}
 	return s.tmpl.ExecuteTemplate(w, name, data)
 }
 
-func parseTemplates() (*template.Template, error) {
+func parseTemplates() (*template.Template, map[string]*template.Template, error) {
 	funcMap := template.FuncMap{
 		"sliceJoin": func(slice []string, sep string) string {
 			return strings.Join(slice, sep)
@@ -114,7 +142,10 @@ func parseTemplates() (*template.Template, error) {
 		},
 	}
 
-	tmpl := template.New("").Funcs(funcMap)
+	baseTmpl := template.New("base").Funcs(funcMap)
+	allTmpl := template.New("all").Funcs(funcMap)
+	pageFiles := make(map[string]string)
+
 	err := fs.WalkDir(web.Files, "templates", func(path string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
@@ -125,14 +156,36 @@ func parseTemplates() (*template.Template, error) {
 				return err
 			}
 			name := filepath.Base(path)
-			if _, err := tmpl.New(name).Parse(string(content)); err != nil {
-				return fmt.Errorf("failed parsing template %s: %w", path, err)
+			if _, err := allTmpl.New(name).Parse(string(content)); err != nil {
+				return fmt.Errorf("failed parsing template %s into all: %w", path, err)
+			}
+
+			normPath := filepath.ToSlash(path)
+			if strings.Contains(normPath, "templates/pages/") {
+				pageFiles[name] = string(content)
+			} else {
+				if _, err := baseTmpl.New(name).Parse(string(content)); err != nil {
+					return fmt.Errorf("failed parsing base/partial %s: %w", path, err)
+				}
 			}
 		}
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return tmpl, nil
+
+	pages := make(map[string]*template.Template)
+	for pageName, content := range pageFiles {
+		clone, err := baseTmpl.Clone()
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed cloning base template for %s: %w", pageName, err)
+		}
+		if _, err := clone.New(pageName).Parse(content); err != nil {
+			return nil, nil, fmt.Errorf("failed parsing page %s into clone: %w", pageName, err)
+		}
+		pages[pageName] = clone
+	}
+
+	return allTmpl, pages, nil
 }

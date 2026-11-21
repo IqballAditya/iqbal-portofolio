@@ -1,0 +1,33 @@
+<div class="card" 
+     hx-get="/projects/{{.ID}}/modal" 
+     hx-target="#modal-container" 
+     hx-swap="innerHTML"
+     role="button"
+     tabindex="0"
+     aria-label="View {{.Title}} case study">
+    <div class="card-media-wrapper">
+        {{if .ImageURL}}
+        <img class="card-media" src="{{.ImageURL}}" alt="{{.Title}}" loading="lazy" onerror="this.style.display='none'; if(this.nextElementSibling) this.nextElementSibling.style.display='flex';">
+        <div class="card-media-placeholder" style="display: none;">
+            <span class="card-media-title">{{.Title}}</span>
+        </div>
+        {{else}}
+        <div class="card-media-placeholder">
+            <span class="card-media-title">{{.Title}}</span>
+        </div>
+        {{end}}
+        <div class="card-overlay-badge">{{.Category}}</div>
+    </div>
+    <div class="card-body">
+        <div class="card-header-row">
+            <h3 class="card-title">{{.Title}}</h3>
+            <span class="badge badge-match">{{.MatchScore}}% Match</span>
+        </div>
+        <p class="card-metrics">{{.Metrics}}</p>
+        <div class="card-tags">
+            {{range .TechStack}}
+            <span class="badge badge-tech">{{.}}</span>
+            {{end}}
+        </div>
+    </div>
+</div>

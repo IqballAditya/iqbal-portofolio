@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{if .Title}}{{.Title}} - IQBAL{{else}}IQBAL - Lead Systems Architect & Full-Stack Engineer{{end}}</title>
+    <title>{{if .Title}}{{.Title}} - IQBAL{{else}}IQBAL - Lead Systems Architect &amp; Full-Stack Engineer{{end}}</title>
     <meta name="description" content="High-throughput systems architecture, AI orchestration, and full-stack engineering portfolio presented in Netflix UI.">
     <link rel="stylesheet" href="/static/css/style.css">
     <script src="/static/js/htmx.min.js"></script>
 </head>
 <body>
     <!-- Top Navigation -->
+    {{if not .HideNav}}
     <header class="navbar">
         <div class="nav-left">
             <a href="/" class="nav-brand" aria-label="IQBAL Home">IQBAL</a>
@@ -36,13 +37,18 @@
                 <span id="shortlist-counter" class="counter-badge">{{if .ShortlistCount}}{{.ShortlistCount}}{{else}}0{{end}}</span>
             </a>
             <a href="/gateway" class="persona-badge" title="Switch Persona Profile">
-                <span class="persona-avatar-sm" style="background-color: #E50914;">
+                <span class="persona-avatar-sm" style="background-color: {{if .PersonaColor}}{{.PersonaColor}}{{else}}#E50914{{end}};">
                     {{if .PersonaInitial}}{{.PersonaInitial}}{{else}}G{{end}}
                 </span>
                 <span>{{if .PersonaName}}{{.PersonaName}}{{else}}Guest{{end}}</span>
             </a>
         </div>
     </header>
+    {{else}}
+    <header class="gateway-header">
+        <a href="/" class="nav-brand" aria-label="IQBAL Home">IQBAL</a>
+    </header>
+    {{end}}
 
     <!-- Main Content Slot -->
     <main id="main-content">
@@ -53,6 +59,7 @@
     <div id="modal-container"></div>
 
     <!-- Netflix Footer -->
+    {{if not .HideFooter}}
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-heading">
@@ -81,13 +88,14 @@
                 </div>
             </div>
             <div class="footer-specs">
-                <div>&copy; 2026 IQBAL. All rights reserved. High-Throughput Systems & Architecture.</div>
+                <div>&copy; 2026 IQBAL. All rights reserved. High-Throughput Systems &amp; Architecture.</div>
                 <div class="footer-specs-badge">
                     Go 1.22 + HTMX + SQLite (Embedded Single-Binary)
                 </div>
             </div>
         </div>
     </footer>
+    {{end}}
 </body>
 </html>
 {{define "content"}}{{end}}

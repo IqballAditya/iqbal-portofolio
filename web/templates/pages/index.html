@@ -1,0 +1,104 @@
+{{define "content"}}
+<!-- Hero Section for Nexus AI Agent -->
+<section class="hero-banner">
+    <div class="hero-content">
+        <div class="hero-top-badge">
+            <span class="hero-rank-icon">TOP 1</span>
+            <span>IN ARCHITECTURE & SYSTEMS TODAY</span>
+        </div>
+        <h1 class="hero-title">{{if .Hero}}{{.Hero.Title}}{{else}}Nexus AI Agent{{end}}</h1>
+        
+        <div class="hero-badges">
+            <span class="badge badge-match">99% Match</span>
+            <span class="badge badge-outline">2026</span>
+            <span class="badge badge-outline">18+ YRS EXP</span>
+            <span class="badge badge-outline">Ultra HD 4K</span>
+            <span class="badge badge-tech">Lead Systems Architect</span>
+        </div>
+
+        <p class="hero-synopsis">
+            {{if .Hero}}{{.Hero.Synopsis}}{{else}}An enterprise-grade autonomous agent runtime capable of dynamic workflow orchestration, self-healing diagnostics, and safe code synthesis in sandboxed cloud environments.{{end}}
+        </p>
+
+        <div class="hero-metrics">
+            <strong>Impact:</strong> 50k+ req/sec, &lt;80ms p99 &bull; Sub-100ms planning latency &bull; 99.4% task completion rate
+        </div>
+
+        <div class="hero-actions">
+            <a href="/projects/nexus-ai/player" class="btn btn-white" aria-label="Play Walkthrough for Nexus AI Agent">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <span>Play Walkthrough</span>
+            </a>
+            <button class="btn btn-secondary" 
+                    hx-get="/projects/nexus-ai/modal" 
+                    hx-target="#modal-container" 
+                    hx-swap="innerHTML"
+                    aria-label="More Info about Nexus AI Agent">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <span>More Info</span>
+            </button>
+            <button class="btn btn-icon" 
+                    hx-post="/shortlist/nexus-ai" 
+                    hx-target="#shortlist-counter" 
+                    title="Add to Shortlist" 
+                    aria-label="Add to Shortlist">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+</section>
+
+<div class="feed-container">
+    <!-- Carousel 1: Continue Reviewing Iqbal's Projects -->
+    <section class="carousel-section" id="projects">
+        <h2 class="section-title">Continue Reviewing Iqbal's Projects</h2>
+        <div class="carousel-container">
+            <div class="carousel-row">
+                {{range .Projects}}
+                    {{template "project_card.html" .}}
+                {{end}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel 2: Top 10 Tech Stacks by Iqbal Today -->
+    <section class="carousel-section" id="skills">
+        <h2 class="section-title">Top 10 Tech Stacks by Iqbal Today</h2>
+        <div class="carousel-container">
+            <div class="carousel-row top10-row">
+                {{range .TopSkills}}
+                <div class="top10-card">
+                    <div class="top10-rank">{{.Rank}}</div>
+                    <div class="top10-content">
+                        <div class="top10-badge">{{.Category}}</div>
+                        <h3 class="top10-name">{{.Name}}</h3>
+                        <p class="top10-desc">{{.Description}}</p>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+        </div>
+    </section>
+
+    <!-- Carousel 3: Proven Impact & Product Case Studies -->
+    <section class="carousel-section">
+        <h2 class="section-title">Proven Impact & Product Case Studies</h2>
+        <div class="carousel-container">
+            <div class="carousel-row">
+                {{range .CaseStudies}}
+                    {{template "project_card.html" .}}
+                {{end}}
+            </div>
+        </div>
+    </section>
+</div>
+{{end}}

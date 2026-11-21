@@ -1,0 +1,26 @@
+{{define "content"}}
+<div class="gateway-container">
+    <div class="gateway-content">
+        <h1 class="gateway-title">Who's Watching?</h1>
+        <p class="gateway-subtitle">Choose your lens to personalize Iqbal's engineering showcase</p>
+        
+        <form method="POST" action="/gateway/select" class="gateway-form">
+            <div class="profile-grid">
+                {{range .Personas}}
+                <button type="submit" name="persona" value="{{.Key}}" class="profile-item" aria-label="Select {{.Name}} profile">
+                    <div class="profile-avatar" style="background-color: {{.Color}};">
+                        <span class="profile-initial">{{.Initial}}</span>
+                    </div>
+                    <span class="profile-name">{{.Name}}</span>
+                    <span class="profile-desc">{{.Subtitle}}</span>
+                </button>
+                {{end}}
+            </div>
+        </form>
+
+        <div class="gateway-actions">
+            <a href="/" class="btn btn-outline gateway-btn">Browse as Guest</a>
+        </div>
+    </div>
+</div>
+{{end}}
