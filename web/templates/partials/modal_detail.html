@@ -1,0 +1,119 @@
+<div class="modal-backdrop" id="project-modal" 
+     hx-on:click="if(event.target === this) document.getElementById('modal-container').innerHTML=''"
+     tabindex="-1"
+     hx-on:keydown.window="if(event.key === 'Escape') document.getElementById('modal-container').innerHTML=''">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modal-project-title">
+        <button class="modal-close-btn" 
+                hx-on:click="document.getElementById('modal-container').innerHTML=''" 
+                aria-label="Close modal">&times;</button>
+        {{if .NotFound}}
+        <div class="modal-not-found">
+            <h2 class="modal-not-found-title">Project Not Found</h2>
+            <p class="modal-not-found-desc">The requested project could not be found or has been relocated.</p>
+            <div class="modal-actions" style="justify-content: center; margin-top: 1.5rem;">
+                <button class="btn btn-secondary" hx-on:click="document.getElementById('modal-container').innerHTML=''">
+                    Close
+                </button>
+            </div>
+        </div>
+        {{else}}
+        <div class="modal-hero-banner" {{if .Project.ImageURL}}style="background-image: linear-gradient(180deg, rgba(24, 24, 24, 0.2) 0%, rgba(24, 24, 24, 0.95) 100%), url('{{.Project.ImageURL}}');"{{end}}>
+            <div class="modal-hero-inner">
+                <span class="badge badge-match" style="color: #46D369;">{{.Project.MatchScore}}% Match</span>
+                <h2 id="modal-project-title" class="modal-title">{{.Project.Title}}</h2>
+                <div class="modal-badges">
+                    <span class="badge badge-outline">{{.Project.Category}}</span>
+                    <span class="badge badge-tech">{{.Project.Role}}</span>
+                </div>
+                {{if .Project.Metrics}}
+                <div class="modal-metrics">
+                    <strong>Impact:</strong> {{.Project.Metrics}}
+                </div>
+                {{end}}
+                <div class="modal-actions">
+                    <a href="/projects/{{.Project.ID}}/player" class="btn btn-white" aria-label="Play Walkthrough for {{.Project.Title}}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M8 5v14l11-7z"/>
+                        </svg>
+                        <span>Play Walkthrough</span>
+                    </a>
+                    <button class="btn btn-secondary" 
+                            hx-post="/shortlist/{{.Project.ID}}" 
+                            hx-target="#shortlist-counter" 
+                            title="Add to Shortlist" 
+                            aria-label="Add to Shortlist">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                        <span>Shortlist</span>
+                    </button>
+                    {{if .Project.GithubURL}}
+                    <a href="{{.Project.GithubURL}}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="View on GitHub">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                        </svg>
+                        <span>GitHub</span>
+                    </a>
+                    {{end}}
+                    {{if .Project.DemoURL}}
+                    <a href="{{.Project.DemoURL}}" target="_blank" rel="noopener noreferrer" class="btn btn-outline" aria-label="Live Demo">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                            <polyline points="15 3 21 3 21 9"></polyline>
+                            <line x1="10" y1="14" x2="21" y2="3"></line>
+                        </svg>
+                        <span>Live Demo</span>
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+
+        <div class="modal-body-content">
+            <div class="modal-synopsis-section">
+                {{if .Project.Tagline}}
+                <h3 class="modal-tagline">{{.Project.Tagline}}</h3>
+                {{end}}
+                <p class="modal-synopsis-text">{{.Project.Synopsis}}</p>
+                <div class="modal-tech-pills">
+                    {{range .Project.TechStack}}
+                    <span class="badge badge-tech">{{.}}</span>
+                    {{end}}
+                </div>
+            </div>
+
+            {{if .Project.Milestones}}
+            <div class="modal-episodes-section">
+                <h3 class="modal-section-title">Episodes & Milestones</h3>
+                <div class="modal-episodes-list">
+                    {{range .Project.Milestones}}
+                    <div class="milestone-card">
+                        <div class="milestone-header">
+                            <div class="milestone-title-row">
+                                <span class="milestone-ep-num">E{{.EpisodeNumber}}</span>
+                                <h4 class="milestone-title">{{.Title}}</h4>
+                            </div>
+                            <span class="milestone-duration">{{.Duration}}</span>
+                        </div>
+                        <p class="milestone-summary">{{.Summary}}</p>
+                        {{if .CodeSnippet}}
+                        <div class="terminal-window">
+                            <div class="terminal-bar">
+                                <span class="terminal-dot red"></span>
+                                <span class="terminal-dot yellow"></span>
+                                <span class="terminal-dot green"></span>
+                                <span class="terminal-title">architecture.go</span>
+                            </div>
+                            <pre class="terminal-snippet"><code>{{.CodeSnippet}}</code></pre>
+                        </div>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+        {{end}}
+    </div>
+</div>

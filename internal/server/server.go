@@ -86,8 +86,23 @@ func (s *Server) registerRoutes() error {
 	s.router.HandleFunc("GET /{$}", s.HandleHome)
 	s.router.HandleFunc("GET /gateway", s.HandleGateway)
 	s.router.HandleFunc("POST /gateway/select", s.HandleGatewaySelect)
+	s.router.HandleFunc("GET /projects/{id}/modal", s.HandleProjectModal)
+	s.router.HandleFunc("GET /search", s.HandleSearch)
+	s.router.HandleFunc("GET /api/search", s.HandleSearchAPI)
 
 	return nil
+}
+
+func (s *Server) HandleProjectModal(w http.ResponseWriter, r *http.Request) {
+	s.handlers.ProjectModal(w, r)
+}
+
+func (s *Server) HandleSearch(w http.ResponseWriter, r *http.Request) {
+	s.handlers.Search(w, r)
+}
+
+func (s *Server) HandleSearchAPI(w http.ResponseWriter, r *http.Request) {
+	s.handlers.SearchAPI(w, r)
 }
 
 func (s *Server) HandleGateway(w http.ResponseWriter, r *http.Request) {

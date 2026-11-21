@@ -1,0 +1,64 @@
+{{define "content"}}
+<div class="search-page-container">
+    <div class="search-header">
+        <h1 class="search-title">Search Matrix</h1>
+        <p class="search-subtitle">Real-time debounced query across distributed systems, AI engines, and cloud infrastructure</p>
+        
+        <div class="search-bar-wrapper">
+            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="search" 
+                   id="search-input"
+                   name="q" 
+                   class="search-input" 
+                   placeholder="Search projects, technologies (Go, Raft, gRPC, eBPF), roles..." 
+                   autofocus 
+                   value="{{.Query}}"
+                   hx-get="/api/search" 
+                   hx-trigger="keyup changed delay:250ms, search" 
+                   hx-target="#search-results" 
+                   hx-include="[name='category']"
+                   aria-label="Search projects">
+        </div>
+
+        <div class="category-filters" role="radiogroup" aria-label="Category filters">
+            <label class="category-pill {{if or (eq .Category "") (eq .Category "all")}}active{{end}}">
+                <input type="radio" name="category" value="all" 
+                       {{if or (eq .Category "") (eq .Category "all")}}checked{{end}}
+                       hx-get="/api/search" hx-trigger="change" hx-target="#search-results" hx-include="#search-input">
+                <span>All</span>
+            </label>
+            <label class="category-pill {{if eq .Category "ai"}}active{{end}}">
+                <input type="radio" name="category" value="ai" 
+                       {{if eq .Category "ai"}}checked{{end}}
+                       hx-get="/api/search" hx-trigger="change" hx-target="#search-results" hx-include="#search-input">
+                <span>AI</span>
+            </label>
+            <label class="category-pill {{if eq .Category "backend"}}active{{end}}">
+                <input type="radio" name="category" value="backend" 
+                       {{if eq .Category "backend"}}checked{{end}}
+                       hx-get="/api/search" hx-trigger="change" hx-target="#search-results" hx-include="#search-input">
+                <span>Backend</span>
+            </label>
+            <label class="category-pill {{if eq .Category "infra"}}active{{end}}">
+                <input type="radio" name="category" value="infra" 
+                       {{if eq .Category "infra"}}checked{{end}}
+                       hx-get="/api/search" hx-trigger="change" hx-target="#search-results" hx-include="#search-input">
+                <span>Infra</span>
+            </label>
+            <label class="category-pill {{if eq .Category "fullstack"}}active{{end}}">
+                <input type="radio" name="category" value="fullstack" 
+                       {{if eq .Category "fullstack"}}checked{{end}}
+                       hx-get="/api/search" hx-trigger="change" hx-target="#search-results" hx-include="#search-input">
+                <span>Fullstack</span>
+            </label>
+        </div>
+    </div>
+
+    <div id="search-results" class="search-results-container">
+        {{template "search_results.html" .}}
+    </div>
+</div>
+{{end}}
