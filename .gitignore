@@ -1,0 +1,6 @@
+.superpowers/
+bin/
+test_portfolio.db
+*.db
+*.db-wal
+*.db-shm
