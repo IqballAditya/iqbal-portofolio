@@ -1,0 +1,8 @@
+LINK PUBLIK PORTOFOLIO IQBAL ADITYA (ONLINE 24/7):
+https://readings-disclosure-shoot-folder.trycloudflare.com
+
+LINK LOKAL (DARI LAPTOP INI):
+http://127.0.0.1:8080
+
+GITHUB REPOSITORY:
+https://github.com/IqballAditya/iqbal-portofolio

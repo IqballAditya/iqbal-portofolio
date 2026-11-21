@@ -93,15 +93,15 @@ func TestGetProjectByIDWithMilestones(t *testing.T) {
 	}
 
 	projectRepo := repository.NewProjectRepo(db)
-	project, err := projectRepo.GetProjectByID("nexus-ai")
+	project, err := projectRepo.GetProjectByID("adith-ai")
 	if err != nil {
 		t.Fatalf("GetProjectByID error: %v", err)
 	}
 	if project == nil {
-		t.Fatalf("expected project nexus-ai, got nil")
+		t.Fatalf("expected project adith-ai, got nil")
 	}
-	if project.ID != "nexus-ai" {
-		t.Errorf("expected ID nexus-ai, got %s", project.ID)
+	if project.ID != "adith-ai" {
+		t.Errorf("expected ID adith-ai, got %s", project.ID)
 	}
 	if len(project.Milestones) != 3 {
 		t.Errorf("expected 3 milestones, got %d", len(project.Milestones))
@@ -136,12 +136,12 @@ func TestSearchProjects(t *testing.T) {
 	}
 
 	// Search category all with query
-	resultsAll, err := projectRepo.SearchProjects("nexus", "all")
+	resultsAll, err := projectRepo.SearchProjects("adith", "all")
 	if err != nil {
 		t.Fatalf("SearchProjects all category error: %v", err)
 	}
 	if len(resultsAll) == 0 {
-		t.Fatalf("expected search results for 'nexus', got 0")
+		t.Fatalf("expected search results for 'adith', got 0")
 	}
 }
 
@@ -155,7 +155,7 @@ func TestToggleShortlist(t *testing.T) {
 
 	shortlistRepo := repository.NewShortlistRepo(db)
 	sessionID := "sess-1"
-	projectID := "nexus-ai"
+	projectID := "adith-ai"
 
 	// Toggle ON
 	shortlisted, err := shortlistRepo.ToggleShortlist(sessionID, projectID)

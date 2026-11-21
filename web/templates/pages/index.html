@@ -1,12 +1,12 @@
 {{define "content"}}
-<!-- Hero Section for Nexus AI Agent -->
+<!-- Hero Section for Adith AI Agent -->
 <section class="hero-banner">
     <div class="hero-content">
         <div class="hero-top-badge">
             <span class="hero-rank-icon">TOP 1</span>
             <span>IN ARCHITECTURE & SYSTEMS TODAY</span>
         </div>
-        <h1 class="hero-title">{{if .Hero}}{{.Hero.Title}}{{else}}Nexus AI Agent{{end}}</h1>
+        <h1 class="hero-title">{{if .Hero}}{{.Hero.Title}}{{else}}Adith AI Agent{{end}}</h1>
         
         <div class="hero-badges">
             <span class="badge badge-match">99% Match</span>
@@ -25,17 +25,17 @@
         </div>
 
         <div class="hero-actions">
-            <a href="/projects/nexus-ai/player" class="btn btn-white" aria-label="Play Walkthrough for Nexus AI Agent">
+            <a href="/projects/{{if .Hero}}{{.Hero.ID}}{{else}}adith-ai{{end}}/player" class="btn btn-white" aria-label="Play Walkthrough for Adith AI Agent">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
                 <span>Play Walkthrough</span>
             </a>
             <button class="btn btn-secondary" 
-                    hx-get="/projects/nexus-ai/modal" 
+                    hx-get="/projects/{{if .Hero}}{{.Hero.ID}}{{else}}adith-ai{{end}}/modal" 
                     hx-target="#modal-container" 
                     hx-swap="innerHTML"
-                    aria-label="More Info about Nexus AI Agent">
+                    aria-label="More Info about Adith AI Agent">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
                     <line x1="12" y1="16" x2="12" y2="12"></line>
@@ -44,7 +44,7 @@
                 <span>More Info</span>
             </button>
             <button class="btn btn-icon" 
-                    hx-post="/shortlist/nexus-ai" 
+                    hx-post="/shortlist/{{if .Hero}}{{.Hero.ID}}{{else}}adith-ai{{end}}" 
                     hx-target="#shortlist-counter" 
                     title="Add to Shortlist" 
                     aria-label="Add to Shortlist">

@@ -83,8 +83,8 @@ func TestVisitorJourney_E2E(t *testing.T) {
 			t.Fatalf("failed reading response body: %v", err)
 		}
 		bodyStr := string(body)
-		if !strings.Contains(bodyStr, "Nexus AI Agent") {
-			t.Errorf("expected hero to feature 'Nexus AI Agent'")
+		if !strings.Contains(bodyStr, "Adith AI Agent") {
+			t.Errorf("expected hero to feature 'Adith AI Agent'")
 		}
 		if !strings.Contains(bodyStr, "Top 10 Tech Stacks") && !strings.Contains(bodyStr, "TOP 10") {
 			t.Errorf("expected home page to contain tech stack carousel")
@@ -138,9 +138,9 @@ func TestVisitorJourney_E2E(t *testing.T) {
 	})
 
 	t.Run("3_CaseStudy_Modal", func(t *testing.T) {
-		respModal, err := client.Get(ts.URL + "/projects/nexus-ai/modal")
+		respModal, err := client.Get(ts.URL + "/projects/adith-ai/modal")
 		if err != nil {
-			t.Fatalf("GET /projects/nexus-ai/modal failed: %v", err)
+			t.Fatalf("GET /projects/adith-ai/modal failed: %v", err)
 		}
 		defer respModal.Body.Close()
 
@@ -152,7 +152,7 @@ func TestVisitorJourney_E2E(t *testing.T) {
 			t.Fatalf("failed reading modal body: %v", err)
 		}
 		modalStr := string(modalBody)
-		if !strings.Contains(modalStr, "Nexus AI Agent") {
+		if !strings.Contains(modalStr, "Adith AI Agent") {
 			t.Errorf("expected modal to contain project title")
 		}
 		if !strings.Contains(modalStr, "Blueprint") {
@@ -164,9 +164,9 @@ func TestVisitorJourney_E2E(t *testing.T) {
 	})
 
 	t.Run("4_Shortlist_Toggle", func(t *testing.T) {
-		respToggle, err := client.Post(ts.URL+"/shortlist/nexus-ai", "application/x-www-form-urlencoded", nil)
+		respToggle, err := client.Post(ts.URL+"/shortlist/adith-ai", "application/x-www-form-urlencoded", nil)
 		if err != nil {
-			t.Fatalf("POST /shortlist/nexus-ai failed: %v", err)
+			t.Fatalf("POST /shortlist/adith-ai failed: %v", err)
 		}
 		defer respToggle.Body.Close()
 
@@ -202,8 +202,8 @@ func TestVisitorJourney_E2E(t *testing.T) {
 			t.Fatalf("failed reading shortlist body: %v", err)
 		}
 		shortlistStr := string(shortlistBody)
-		if !strings.Contains(shortlistStr, "Nexus AI Agent") {
-			t.Errorf("expected shortlisted project 'Nexus AI Agent' on page")
+		if !strings.Contains(shortlistStr, "Adith AI Agent") {
+			t.Errorf("expected shortlisted project 'Adith AI Agent' on page")
 		}
 
 		tiers := []string{
@@ -251,9 +251,9 @@ func TestVisitorJourney_E2E(t *testing.T) {
 	})
 
 	t.Run("7_Interactive_Player", func(t *testing.T) {
-		respPlayer, err := client.Get(ts.URL + "/projects/nexus-ai/player")
+		respPlayer, err := client.Get(ts.URL + "/projects/adith-ai/player")
 		if err != nil {
-			t.Fatalf("GET /projects/nexus-ai/player failed: %v", err)
+			t.Fatalf("GET /projects/adith-ai/player failed: %v", err)
 		}
 		defer respPlayer.Body.Close()
 
@@ -262,7 +262,7 @@ func TestVisitorJourney_E2E(t *testing.T) {
 		}
 		playerBody, _ := io.ReadAll(respPlayer.Body)
 		playerStr := string(playerBody)
-		if !strings.Contains(playerStr, "Nexus AI Agent") {
+		if !strings.Contains(playerStr, "Adith AI Agent") {
 			t.Errorf("expected player page to include project title")
 		}
 		if !strings.Contains(playerStr, "terminal-player") {
@@ -285,8 +285,8 @@ func TestVisitorJourney_E2E(t *testing.T) {
 		}
 		searchBody, _ := io.ReadAll(respSearch.Body)
 		searchStr := string(searchBody)
-		if !strings.Contains(searchStr, "Nexus AI Agent") {
-			t.Errorf("expected search results to contain 'Nexus AI Agent', got: %s", searchStr)
+		if !strings.Contains(searchStr, "Adith AI Agent") {
+			t.Errorf("expected search results to contain 'Adith AI Agent', got: %s", searchStr)
 		}
 	})
 }

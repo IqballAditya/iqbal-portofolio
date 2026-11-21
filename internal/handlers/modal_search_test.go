@@ -10,23 +10,23 @@ import (
 func TestModal_GetExistingProject(t *testing.T) {
 	srv := setupTestServer(t)
 
-	req := httptest.NewRequest(http.MethodGet, "/projects/nexus-ai/modal", nil)
+	req := httptest.NewRequest(http.MethodGet, "/projects/adith-ai/modal", nil)
 	rec := httptest.NewRecorder()
 	srv.ServeHTTP(rec, req)
 
 	if rec.Code != http.StatusOK {
-		t.Fatalf("expected status 200 from /projects/nexus-ai/modal, got %d", rec.Code)
+		t.Fatalf("expected status 200 from /projects/adith-ai/modal, got %d", rec.Code)
 	}
 
 	body := rec.Body.String()
 
 	expectedSubstrings := []string{
-		"Nexus AI Agent",
+		"Adith AI Agent",
 		"Episodes & Milestones",
 		"type WorkerPool struct",
 		"99% Match",
-		"/projects/nexus-ai/player",
-		"hx-post=\"/shortlist/nexus-ai\"",
+		"/projects/adith-ai/player",
+		"hx-post=\"/shortlist/adith-ai\"",
 	}
 
 	for _, sub := range expectedSubstrings {
@@ -78,7 +78,7 @@ func TestSearch_GetPage(t *testing.T) {
 		"Backend",
 		"Infra",
 		"Fullstack",
-		"Nexus AI Agent",
+		"Adith AI Agent",
 	}
 
 	for _, elem := range expectedElements {

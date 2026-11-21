@@ -44,8 +44,8 @@ type seedSkill struct {
 func SeedData(db *sql.DB) error {
 	projects := []seedProject{
 		{
-			id:             "nexus-ai",
-			title:          "Nexus AI Agent",
+			id:             "adith-ai",
+			title:          "Adith AI Agent",
 			category:       "ai",
 			tagline:        "Autonomous Multi-Agent Workflow Engine for Resilient Cloud Automation",
 			synopsis:       "An enterprise-grade autonomous agent runtime capable of dynamic workflow orchestration, self-healing diagnostics, and safe code synthesis in sandboxed cloud environments.",
@@ -54,9 +54,9 @@ func SeedData(db *sql.DB) error {
 			matchScore:     99,
 			role:           "Lead Systems Architect & Core Developer",
 			metrics:        "Sub-100ms planning latency, 99.4% task completion rate across 50k automated runs",
-			githubURL:      "https://github.com/iqbal/nexus-ai",
-			demoURL:        "https://nexus-ai.demo.dev",
-			imageURL:       "/static/images/projects/nexus-ai.jpg",
+			githubURL:      "https://github.com/IqballAditya/adith-ai-agent",
+			demoURL:        "https://adith-ai.demo.dev",
+			imageURL:       "/static/images/projects/adith-ai.jpg",
 			isFeatured:     true,
 			sortOrder:      1,
 		},
@@ -150,7 +150,7 @@ func SeedData(db *sql.DB) error {
 	milestones := []seedMilestone{
 		{
 			id:            1,
-			projectID:     "nexus-ai",
+			projectID:     "adith-ai",
 			episodeNumber: 1,
 			title:         "S1:E1 - Blueprint & Control Plane",
 			duration:      "45m",
@@ -159,7 +159,7 @@ func SeedData(db *sql.DB) error {
 		},
 		{
 			id:            2,
-			projectID:     "nexus-ai",
+			projectID:     "adith-ai",
 			episodeNumber: 2,
 			title:         "S1:E2 - Autonomous Graph Execution",
 			duration:      "52m",
@@ -168,7 +168,7 @@ func SeedData(db *sql.DB) error {
 		},
 		{
 			id:            3,
-			projectID:     "nexus-ai",
+			projectID:     "adith-ai",
 			episodeNumber: 3,
 			title:         "S1:E3 - Hardening & Chaos Testing",
 			duration:      "38m",

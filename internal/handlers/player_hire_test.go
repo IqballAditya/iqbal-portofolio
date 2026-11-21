@@ -11,7 +11,7 @@ import (
 func TestPlayer_GetExistingProject(t *testing.T) {
 	srv := setupTestServer(t)
 
-	req := httptest.NewRequest(http.MethodGet, "/projects/nexus-ai/player", nil)
+	req := httptest.NewRequest(http.MethodGet, "/projects/adith-ai/player", nil)
 	rec := httptest.NewRecorder()
 	srv.ServeHTTP(rec, req)
 
@@ -21,7 +21,7 @@ func TestPlayer_GetExistingProject(t *testing.T) {
 
 	body := rec.Body.String()
 	expectedSubstrings := []string{
-		"Nexus AI Agent",
+		"Adith AI Agent",
 		"terminal-player",
 		"player.js",
 		"S1:E1",
@@ -52,7 +52,7 @@ func TestShortlist_Toggle(t *testing.T) {
 	srv := setupTestServer(t)
 
 	// Step 1: POST without cookie -> sets iqbal_session cookie, adds item
-	req1 := httptest.NewRequest(http.MethodPost, "/shortlist/nexus-ai", nil)
+	req1 := httptest.NewRequest(http.MethodPost, "/shortlist/adith-ai", nil)
 	rec1 := httptest.NewRecorder()
 	srv.ServeHTTP(rec1, req1)
 
@@ -72,16 +72,16 @@ func TestShortlist_Toggle(t *testing.T) {
 	}
 
 	// Verify project is shortlisted for this session
-	isShort, err := srv.Shortlists.IsShortlisted(sessionCookie.Value, "nexus-ai")
+	isShort, err := srv.Shortlists.IsShortlisted(sessionCookie.Value, "adith-ai")
 	if err != nil {
 		t.Fatalf("failed to check shortlist status: %v", err)
 	}
 	if !isShort {
-		t.Errorf("expected nexus-ai to be shortlisted after first toggle")
+		t.Errorf("expected adith-ai to be shortlisted after first toggle")
 	}
 
 	// Step 2: POST again with the same cookie -> toggles off (removes item)
-	req2 := httptest.NewRequest(http.MethodPost, "/shortlist/nexus-ai", nil)
+	req2 := httptest.NewRequest(http.MethodPost, "/shortlist/adith-ai", nil)
 	req2.AddCookie(sessionCookie)
 	rec2 := httptest.NewRecorder()
 	srv.ServeHTTP(rec2, req2)
@@ -90,12 +90,12 @@ func TestShortlist_Toggle(t *testing.T) {
 		t.Fatalf("expected status 200 on second toggle, got %d", rec2.Code)
 	}
 
-	isShort2, err := srv.Shortlists.IsShortlisted(sessionCookie.Value, "nexus-ai")
+	isShort2, err := srv.Shortlists.IsShortlisted(sessionCookie.Value, "adith-ai")
 	if err != nil {
 		t.Fatalf("failed to check shortlist status: %v", err)
 	}
 	if isShort2 {
-		t.Errorf("expected nexus-ai to be removed from shortlist after second toggle")
+		t.Errorf("expected adith-ai to be removed from shortlist after second toggle")
 	}
 }
 
@@ -104,7 +104,7 @@ func TestShortlist_GetPage(t *testing.T) {
 
 	// Pre-seed shortlist for session
 	sessionID := "test-session-123"
-	_, err := srv.Shortlists.ToggleShortlist(sessionID, "nexus-ai")
+	_, err := srv.Shortlists.ToggleShortlist(sessionID, "adith-ai")
 	if err != nil {
 		t.Fatalf("failed to pre-seed shortlist: %v", err)
 	}
@@ -121,7 +121,7 @@ func TestShortlist_GetPage(t *testing.T) {
 	body := rec.Body.String()
 	expectedSubstrings := []string{
 		"My Shortlist",
-		"Nexus AI Agent",
+		"Adith AI Agent",
 		"Choose Your Plan",
 		"Full-Time Staff / Lead",
 		"Advisory / Architecture Sprint",

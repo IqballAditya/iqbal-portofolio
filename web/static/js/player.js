@@ -146,7 +146,7 @@
         }
 
         const ep = milestones[currentEpIndex];
-        const templates = getLogTemplates(ep ? ep.title : "Nexus Engine");
+        const templates = getLogTemplates(ep ? ep.title : "Adith AI Engine");
         const entry = templates[stepCount % templates.length];
         appendLine(entry.text, entry.cls);
     }

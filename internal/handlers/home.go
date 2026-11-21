@@ -50,7 +50,7 @@ func (h *Handler) Home(w http.ResponseWriter, r *http.Request) {
 
 	var hero *models.Project
 	for i := range projects {
-		if projects[i].ID == "nexus-ai" {
+		if projects[i].ID == "adith-ai" || projects[i].ID == "nexus-ai" {
 			hero = &projects[i]
 			break
 		}

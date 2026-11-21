@@ -102,8 +102,8 @@ func TestHome_Get(t *testing.T) {
 	}
 
 	body := rec.Body.String()
-	if !strings.Contains(body, "Nexus AI Agent") {
-		t.Errorf("expected home page to contain \"Nexus AI Agent\"")
+	if !strings.Contains(body, "Adith AI Agent") {
+		t.Errorf("expected home page to contain \"Adith AI Agent\"")
 	}
 
 	expectedSubstrings := []string{
@@ -135,7 +135,7 @@ func TestHome_MissingOrCorruptedCookieDefaultsToGuest(t *testing.T) {
 	if rec1.Code != http.StatusOK {
 		t.Fatalf("expected status 200 for missing cookie, got %d", rec1.Code)
 	}
-	if !strings.Contains(rec1.Body.String(), "Nexus AI Agent") {
+	if !strings.Contains(rec1.Body.String(), "Adith AI Agent") {
 		t.Errorf("expected missing cookie request to render home page")
 	}
 
@@ -148,7 +148,7 @@ func TestHome_MissingOrCorruptedCookieDefaultsToGuest(t *testing.T) {
 	if rec2.Code != http.StatusOK {
 		t.Fatalf("expected status 200 for corrupted cookie, got %d", rec2.Code)
 	}
-	if !strings.Contains(rec2.Body.String(), "Nexus AI Agent") {
+	if !strings.Contains(rec2.Body.String(), "Adith AI Agent") {
 		t.Errorf("expected corrupted cookie request to safely fallback to guest")
 	}
 }

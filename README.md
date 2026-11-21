@@ -19,7 +19,7 @@ Designed from Figma specification `BF1A9Lq5hNSw01evMchdbC`.
 ## Features & UI Modules
 
 ### 1. Home Showcase Feed (`/`)
-- **Billboard Hero Banner**: Highlighted flagship project (`Nexus AI Agent`) with dynamic match scores, metadata badges, and direct action triggers.
+- **Billboard Hero Banner**: Highlighted flagship project (`Adith AI Agent`) with dynamic match scores, metadata badges, and direct action triggers.
 - **Top 10 Tech Stacks Carousel**: Ranked Netflix Top 10 badges featuring key languages, databases, networking, and distributed systems tools.
 - **Curated Rows**: Categorized carousels (AI & Distributed Agents, High-Throughput Infrastructure, Core Backend & Storage) with hover scale effects and quick-preview triggers.
 
