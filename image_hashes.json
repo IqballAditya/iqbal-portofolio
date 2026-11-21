@@ -1,0 +1,40 @@
+{
+  "results": {
+    "hero": "c882b08a5aef03102160b8fe178a47bd54d3d808",
+    "row1_0": "ff8573a15de0ec6a0a49366f1741329eea86526b",
+    "row1_2": "2152b4fe8b25ce7830afb07df9294210cc966175",
+    "row1_1": "422786f7dd9e1b64ada2d031c20b221714191434",
+    "row1_3": "20e29ec51f33cd053cfdb353b06afe70fba143da",
+    "row1_4": "63b8f711ecf8e6f27548a3c31feebc6c883bd493",
+    "row2_0": "977f1ad2e51cf9fc4057aa30362a6418dbd03202",
+    "row1_5": "254424b0eb1f9b4a4205b561a4adda771fc3825d",
+    "row2_1": "f2cf45115b95da93f94b2c54ba54e0f3212874cf",
+    "row2_2": "48490a0fd954d96e833b23a3ad813927a60ba954",
+    "row2_3": "5b36e94c67bbabc552ca2915feeb8aa3b40a2fb0",
+    "row2_4": "4a750519e92fc4ee6fae899ab43d7ec69c83dcf7",
+    "row3_0": "0448b1b09bc40e00dc7a047c6c58d7c41aaacec4",
+    "row3_1": "e0ad467160f43ebdd7a862d6e73ff79f1e9437a1",
+    "row3_2": "16149d0b374e724783bc0ffcef7f5cefc6d81f45",
+    "row3_3": "002b2b63040f079bdfaa6650a527c3c03f99738f",
+    "row3_4": "91eb7564989c4d85829019ebd213b893ded12396"
+  },
+  "placed_nodes": [
+    "8:3",
+    "8:4",
+    "8:5",
+    "8:6",
+    "8:7",
+    "8:8",
+    "8:9",
+    "8:10",
+    "8:11",
+    "8:12",
+    "8:13",
+    "8:14",
+    "8:15",
+    "8:16",
+    "8:17",
+    "8:18",
+    "8:19"
+  ]
+}

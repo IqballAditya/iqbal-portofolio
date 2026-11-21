@@ -33,7 +33,11 @@ func (h *Handler) Player(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	milestonesJSON, err := json.Marshal(project.Milestones)
+	milestones := project.Milestones
+	if milestones == nil {
+		milestones = []models.Milestone{}
+	}
+	milestonesJSON, err := json.Marshal(milestones)
 	if err != nil {
 		milestonesJSON = []byte("[]")
 	}
