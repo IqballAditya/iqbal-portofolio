@@ -90,6 +90,10 @@ func (s *Server) registerRoutes() error {
 	s.router.HandleFunc("GET /search", s.HandleSearch)
 	s.router.HandleFunc("GET /api/search", s.HandleSearchAPI)
 	s.router.HandleFunc("GET /projects/{id}/player", s.HandlePlayer)
+	s.router.HandleFunc("GET /demo/adith-ai-studio", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		http.ServeFile(w, r, "adith_ai_studio_preview.html")
+	})
 	s.router.HandleFunc("GET /shortlist", s.HandleShortlist)
 	s.router.HandleFunc("POST /shortlist/{id}", s.HandleShortlistToggle)
 	s.router.HandleFunc("POST /inquiries", s.HandleInquiries)
