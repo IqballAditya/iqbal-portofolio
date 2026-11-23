@@ -1,6 +1,6 @@
 module iqbal-portfolio
 
-go 1.27.4
+go 1.23.0
 
 require (
 	github.com/dustin/go-humanize v1.0.1 // indirect
