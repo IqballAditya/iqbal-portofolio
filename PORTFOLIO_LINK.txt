@@ -1,8 +1,13 @@
-LINK PUBLIK PORTOFOLIO IQBAL ADITYA (ONLINE 24/7):
-https://readings-disclosure-shoot-folder.trycloudflare.com
+CARA AKSES PORTOFOLIO NETFLIX IQBAL ADITYA:
 
-LINK LOKAL (DARI LAPTOP INI):
-http://127.0.0.1:8080
+1. AKSES LOKAL (DARI LAPTOP INI):
+   - Buka: http://localhost:8080  atau  http://127.0.0.1:8080
+   - Catatan: Server harus dalam keadaan berjalan. Kamu cukup klik 2x file "run.bat" atau jalankan ".\bin\iqbal-portfolio.exe".
 
-GITHUB REPOSITORY:
-https://github.com/IqballAditya/iqbal-portofolio
+2. AKSES PUBLIK (INTERNET):
+   - Link lama: https://readings-disclosure-shoot-folder.trycloudflare.com (Tunnel sementara, otomatis offline jika sesi cloudflared ditutup).
+   - Untuk mempublikasikan kembali ke internet, jalankan:
+     cloudflared tunnel --url http://localhost:8080
+
+3. GITHUB REPOSITORY:
+   https://github.com/IqballAditya/iqbal-portofolio

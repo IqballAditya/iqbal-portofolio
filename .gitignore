@@ -4,3 +4,4 @@ test_portfolio.db
 *.db
 *.db-wal
 *.db-shm
+*.log

@@ -91,8 +91,13 @@ func (s *Server) registerRoutes() error {
 	s.router.HandleFunc("GET /api/search", s.HandleSearchAPI)
 	s.router.HandleFunc("GET /projects/{id}/player", s.HandlePlayer)
 	s.router.HandleFunc("GET /demo/adith-ai-studio", func(w http.ResponseWriter, r *http.Request) {
+		content, err := web.Files.ReadFile("adith_ai_studio_preview.html")
+		if err != nil {
+			http.Error(w, "Preview not found", http.StatusNotFound)
+			return
+		}
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
-		http.ServeFile(w, r, "adith_ai_studio_preview.html")
+		_, _ = w.Write(content)
 	})
 	s.router.HandleFunc("GET /shortlist", s.HandleShortlist)
 	s.router.HandleFunc("POST /shortlist/{id}", s.HandleShortlistToggle)
