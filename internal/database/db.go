@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	_ "embed"
+	"strings"
 
 	_ "modernc.org/sqlite"
 )
@@ -16,7 +17,12 @@ func InitDB(dataSourceName string) (*sql.DB, error) {
 		return nil, err
 	}
 
-	if _, err := db.Exec("PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;"); err != nil {
+	pragmas := "PRAGMA foreign_keys=ON;"
+	if !strings.Contains(dataSourceName, "memory") {
+		pragmas = "PRAGMA journal_mode=WAL; PRAGMA foreign_keys=ON;"
+	}
+
+	if _, err := db.Exec(pragmas); err != nil {
 		db.Close()
 		return nil, err
 	}
