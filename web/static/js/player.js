@@ -172,6 +172,10 @@
         isPlaying = !isPlaying;
         if (isPlaying) {
             startLoop();
+            var studioIframe = document.getElementById('studio-iframe');
+            if (studioIframe && studioIframe.contentWindow) {
+                studioIframe.contentWindow.postMessage({ type: 'RUN_AGENT' }, '*');
+            }
         } else {
             stopLoop();
         }
